@@ -86,8 +86,7 @@ pipeline{
         stage ("Deploy to cluster dev-kt-k8s") {
             steps {
                 withKubeConfig(credentialsId: 'kubeconfig-dev-kt-k8s') {
-                    sh "kubectl apply -f https://github.com/Ashok220723/DevSecOps-Project/blob/main/Kubernetes/deployment.yml"
-                    sh "kubectl apply -f https://github.com/Ashok220723/DevSecOps-Project/blob/main/Kubernetes/service.yml"
+                     sh "kubectl apply -f deployment-service.yml"
                 }
             }
         }
