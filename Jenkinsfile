@@ -60,8 +60,8 @@ pipeline{
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
                        sh "docker build --build-arg TMDB_V3_API_KEY=fac06daaa12369b9b55f3f585179dacf -t netflix ."
-                       sh "docker tag netflix ash425/netflix:latest "
-                       sh "docker push ash425/netflix:latest "
+                       sh "docker tag netflix psrao2025/netflix:latest "
+                       sh "docker push psrao2025/netflix:latest "
                     }
                 }
             }
@@ -80,13 +80,13 @@ pipeline{
 
         stage('Deploy to container'){
             steps{
-                sh 'docker run -d --name netflix -p 8088:80 ash425/netflix:latest'
+                sh 'docker run -d --name netflix -p 8088:80 psrao2025/netflix:latest'
             }
         }
         stage ("Deploy to cluster dev-kt-k8s") {
             steps {
                 withKubeConfig(credentialsId: 'kubeconfig-dev-kt-k8s') {
-                    sh "kubectl apply -f deployment.yml"
+                    sh "kubectl apply -f deployment.yml "
                     sh "kubectl apply -f service.yml"
                     sh "kubectl apply -f node-service.yaml"
                     
