@@ -2,8 +2,8 @@
 pipeline{
     agent any
     tools{
-        jdk 'jdk17'
-        nodejs 'node16'
+        jdk 'jdk'
+        nodejs 'node'
     }
     environment {
         SCANNER_HOME=tool 'sonar-scanner'
@@ -16,7 +16,7 @@ pipeline{
         }
         stage('Checkout from Git'){
             steps{
-                git branch: 'main', url: 'https://github.com/Ashok220723/DevSecOps-Project.git'
+                git branch: 'netflix', url: 'https://github.com/Ashok220723/DevSecOps-Project.git'
             }
         }
         stage("Sonarqube Analysis "){
@@ -41,15 +41,15 @@ pipeline{
         }
         stage('OWASP FS SCAN') {
             steps {
-                dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
+                dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP'
                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         }
-         stage('TRIVY FS SCAN') {
-            steps {
-            sh 'docker run --rm -v $(pwd):/app aquasec/trivy fs /app | tee trivyfs.txt'
-            }
-        }
+        //  stage('TRIVY FS SCAN') {
+        //     steps {
+        //     sh 'docker run --rm -v $(pwd):/app aquasec/trivy fs /app | tee trivyfs.txt'
+        //     }
+        // }
         // stage('TRIVY FS SCAN') {
         //     steps {
         //         sh "trivy fs . > trivyfs.txt"
