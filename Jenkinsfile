@@ -74,7 +74,7 @@ pipeline{
                     aquasec/trivy image ash425/netflix:latest | tee trivy-image-scan.txt
                   '''
                 
-                // sh "trivy image ash425/netflix:latest > trivyimage.txt" 
+                sh "trivy image ash425/netflix:latest > trivyimage.txt" 
             }
         }
 
